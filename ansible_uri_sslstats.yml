@@ -1,0 +1,26 @@
+- hosts: all
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/client-ssl/stats/
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: json_response
+
+    - name: printoutput
+      debug:
+        var: json_response
+
+    - local_action:
+        module: copy
+        content: "{{ json_response }}"
+        dest: /pathgoeshere/sslstats.out
