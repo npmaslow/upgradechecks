@@ -1,0 +1,223 @@
+- hosts: all
+  connection: local
+  gather_facts: false
+
+  tasks:    
+    - name: TCP Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/tcp/tcp
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: tcp_response
+
+    - name: TCP LO Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/tcp/tcp-lan-optimized
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: tcp_lo_response
+
+    - name: TCP WO Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/tcp/tcp-wan-optimized
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: tcp_wo_response
+
+    - name: FastL4 Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/fastl4/fastL4
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: fastl4_response
+
+    - name: HTTP Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/http/http
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: http_response
+
+    - name: TCP WO Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/tcp/tcp-wan-optimized
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: tcp_wo_response
+
+    - name: Client SSL Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/client-ssl/clientssl
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: clientssl_response
+
+    - name: Client SSL IC Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/cleint-ssl/clientssl-insecure-compatible
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: clientssl_ic_response
+
+    - name: Server SSL Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/server-ssl/serverssl
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: serverssl_response
+
+    - name: Server SSL IC Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/profile/server-ssl/serverssl-insecure-compatible
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: serverssl_ic_response
+
+    - name: Cookie Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/persistence/cookie/cookie
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: cookie_response
+
+    - name: Source Address Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/persistence/source-addr/source_addr
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: source_addr_response
+
+    - name: Destination Address Profile Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/persistence/dest-addr/dest_addr
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: dest_addr_response
+
+    - name: modified
+      debug:
+        var: tcp_response.json.generation
+
+    - name: modified
+      debug:
+        var: tcp_lo_response.json.generation
+
+    - name: modified
+      debug:
+        var: tcp_wo_response.json.generation
+
+    - name: modified
+      debug:
+        var: fastl4_response.json.generation
+
+    - name: modified
+      debug:
+        var: http_response.json.generation
+
+    - name: modified
+      debug:
+        var: clientssl_response.json.generation
+
+    - name: modified
+      debug:
+        var: clientssl_ic_response.json.generation
+
+    - name: modified
+      debug:
+        var: serverssl_response.json.generation
+
+    - name: modified
+      debug:
+        var: serverssl_ic_response.json.generation
+
+    - name: modified
+      debug:
+        var: cookie_response.json.generation
+
+    - name: modified
+      debug:
+        var: source_addr_response.json.generation
+
+    - name: modified
+      debug:
+        var: dest_addr_response.json.generation
+
+
