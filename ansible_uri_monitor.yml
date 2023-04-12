@@ -1,0 +1,36 @@
+- hosts: all
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Check
+      uri:
+        url: https://192.168.86.000:8443/mgmt/tm/ltm/monitor/http/
+        user: admin
+        password: totallynotarealpassword
+        force_basic_auth: yes
+        validate_certs: no
+        method: GET
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+      register: json_response
+
+    - name: printmoninfo
+      debug:
+        var: json_response
+
+    - name: fullpathparse
+      debug:
+        var: item
+      loop: "{{ json_response | community.general.json_query('json.items[*].fullPath') }}"
+
+    - name: intervalparse
+      debug:
+        var: item
+      loop: "{{ json_response | community.general.json_query('json.items[*].interval') }}"
+
+    - name: sendstringparse
+      debug: 
+        var: item
+      loop: "{{ json_response | community.general.json_query('json.items[*].send') }}"
